@@ -1,1 +1,0 @@
-GenAI Genesis 2024 Project
