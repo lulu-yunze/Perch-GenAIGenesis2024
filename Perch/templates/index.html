@@ -1,14 +1,14 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-
-
-
 <center>
     <img src="https://raw.githubusercontent.com/Doodoal/Img-repo/main/Perch_2.0_Logo.png" class="card-img-top" alt="Image" style="object-fit: cover; height: 200px; width:200px">
     <h1 class="display-4" style="background: linear-gradient(to right, rgb(222, 232, 227), rgb(91, 124, 83)); font-size: 110px; -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: bold;">Perch</h1>
     <p class="lead">A restorative language learning model used to create access to understanding textual and auditory documents, whenever and wherever.</p>
-    <a class="btn btn-primary btn-lg transition-link" href="/layout" role="button">Upload</a>
+    <form action="/success" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <input type="submit" value="Upload" class="btn btn-primary btn-lg transition-link">
+    </form>
 </center>
 
 
