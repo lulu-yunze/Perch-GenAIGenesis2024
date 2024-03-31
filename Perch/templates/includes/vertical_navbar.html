@@ -3,24 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     <style>
         .navbarr {
+            height: 100vh;
             list-style-type: none;
             display: flex;
             row-gap: 15px;
             flex-direction: column;
             justify-content: center;
-            margin: 20px;
+            margin: 25px;
             padding: 0;
             line-height: 17px;
             border-radius: 30px;
             width: 250px;
             position: fixed;
             right: 0;
-            height: 80%;
+            height: 70%;
             overflow: auto;
             background-color: #EBFDFF;
         }
@@ -33,34 +32,38 @@
 
         .navbarr a {
             display: flex;
-            align-items: center; 
-            justify-content: center; 
+            align-items: center;
+            justify-content: center;
             color: black;
             background-color: #94D6E6;
             text-align: center;
-            margin-left: 20px;
-            margin-right: 20px;
             font-weight: 600;
             padding: 8px 16px;
-          
-            height: 50px;
+            margin: 10px; /* Reduced from 20px to 10px */
+            height: 40px; /* Adjusted for compactness */
             text-decoration: none;
-            border-radius: 12px; // Add rounded corners
-            transition: background-color 0.3s; // Smooth transition on hover
+            border-radius: 12px;
+            transition: background-color 0.3s;
         }
 
         .navbarr a:hover {
             background-color: #9FE4F3;
             color: black;
         }
+        
+        /* Additional styling for the paragraph to ensure consistency */
+        .navbarr p {
+            text-align: center;
+            padding: 20px 30px; /* Adjusted padding */
+            margin: 0px;
+            background-color: #EBFDFF; /* Matches navbar background */
+            border-radius: 12px; /* Consistent with anchor style */
+        }
     </style>
 </head>
-<body >
+<body>
 <ul class="navbarr">
-    <p 
-    style="text-align: center;padding: 30px; margin: 0px;"  >
-        How can I help you study today?
-    </p>
+    <p>How can I help you study today?</p>
     <li><a href="#home">Clean Transcript</a></li>
     <li><a href="#about">Summary</a></li>
     <li><a href="#services">Translate to my language</a></li>
@@ -68,12 +71,9 @@
     <li><a href="#contact">Flashcards</a></li>
 </ul>
 
-
-
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </body>
 </html>
