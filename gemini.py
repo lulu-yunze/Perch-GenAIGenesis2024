@@ -12,7 +12,7 @@ from vertexai.generative_models import (
     Image,
     Part,
 )
-API_KEY = ''
+API_KEY = 'AIzaSyBhQF_6ANdTyD1L0tmP1MTJ3gNb6gmuwsU'
 genai.configure(api_key=API_KEY)
 
 '''
@@ -103,7 +103,7 @@ if __name__ == "__main__":
     #print(generated_text)
     
     cleaned_text = clean_up_text(transcript.read(), format="True")
-    #print(cleaned_text)
+    print(cleaned_text)
     
     #translated_text = translate(transcribed_text, "French")
     #print(translated_text)
