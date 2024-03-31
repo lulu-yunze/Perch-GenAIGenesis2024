@@ -1,5 +1,7 @@
 # **Perch**
 
+![perch](https://github.com/lulu-yunze/Perch-GenAIGenesis2024/assets/113797055/a1fb2eb2-63de-4149-8826-0141fcccfd3f)
+
 ## **Inspiration**
 - UN Development Goal #4: Quality Education
 - UN Development Goal #10: Reducing Inequalities
