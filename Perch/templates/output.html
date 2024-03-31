@@ -1,16 +1,40 @@
 {% extends 'layout2.html' %}
 
 {% block body %}
-<head>
-    <title>Output</title>
+<style>
+    /* Styling for typewriter text container */
+    .typewriter p {
+        font-family: monospace;
+        white-space: pre-wrap; /* Preserves whitespace and formatting */
+        overflow: hidden; /* Hides the text until it's "typed" */
+    }
+</style>
+<div class="container">
+    <h1>Original Transcript</h1>
+    <div class="typewriter">
+        <p id="typewriter-text">{{ output | safe }}</p>
+    </div>
+</div>
 
-    <script> //Select Navbar item to color here (use Ids for that)
-       var listItemToColor="";
-    </script>
+<script>
+    const textElement = document.getElementById('typewriter-text');
+    const text = textElement.innerText;
+    let index = 0;
 
-</head>
-<body>
-    <h1>Output of Python Script:</h1>
-    <pre>{{ output }}</pre>
-</body>
+    // Clears the initial text
+    textElement.innerText = '';
+
+    function typeWriterEffect() {
+        if (index < text.length) {
+            // Adds the next character
+            textElement.innerText += text.charAt(index);
+            index++;
+            // Adjust the delay as needed
+            setTimeout(typeWriterEffect, 1);
+        }
+    }
+
+    // Start the typewriter effect once the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', typeWriterEffect);
+</script>
 {% endblock %}
