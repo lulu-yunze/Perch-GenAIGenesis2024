@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Welcome{% endblock %}</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom styles for the vertical navbar */
+        .vertical-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 200px; /* Adjust width of the navbar */
+            height: 100vh; /* Full-height */
+            border-left: 1px solid #ddd; /* Add a left border */
+            background-color: #f8f9fa; /* Light background color */
+            padding-top: 20px; /* Space at the top */
+        }
+
+        .vertical-nav .nav-link {
+            color: #333; /* Darker link color */
+        }
+
+        .vertical-nav .nav-link:hover {
+            color: #007bff; /* Bootstrap primary color on hover */
+        }
+
+        /* Padding for the main content */
+        .main-content {
+            padding-left: 220px; /* Equal to navbar width plus some extra */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Horizontal Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a href="/" style="text-decoration: none">
+            <img src="https://raw.githubusercontent.com/Doodoal/Img-repo/main/Perch_2.0_Logo.png" class="navbar-brand" style="height: 60px"></img>
+            <span style="background: rgb(2, 98, 154); font-size: 25px; -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: bold;">Perch</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/vision">About</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Vertical Navbar -->
+<div class="vertical-nav bg-light" id="sidebar">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link 1</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link 2</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link 3</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link 4</a>
+        </li>
+    </ul>
+</div>
+
+<!-- Page Content -->
+<div class="container mt-5 pt-5 main-content">
+    {% block content %}
+    <!-- Content goes here -->
+    {% endblock %}
+</div>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
