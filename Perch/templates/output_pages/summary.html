@@ -1,0 +1,16 @@
+{% extends 'layout2.html' %}
+
+{% block body %}
+<head>
+    <title>Output</title>
+
+    <script> //Select Navbar item to color here (use Ids for that)
+       var listItemToColor="summary";
+    </script>
+
+</head>
+<body>
+    <h1>Output of Python Script:</h1>
+    <pre>{{ output }}</pre>
+</body>
+{% endblock %}
