@@ -11,10 +11,9 @@
 </head>
 <body>
     <h1>Audio Transcript</h1>
-    <audio controls autoplay muted>
-        <!-- Specify the path to your MP3 file -->
-        <source src="mp3_test.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+    <audio src="{{ url_for('static', filename=mp3_file_path) }}" controls></audio>
+
+    <!-- <audio src="{{url_for('static', filename='{{mp3_file_path}}')}}" controls></audio> -->
+    
 </body>
 {% endblock %}

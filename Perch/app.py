@@ -157,12 +157,14 @@ def accent():
     }
 
     response = requests.post(url, json=data, headers=headers)
-    with open('output.mp3', 'wb') as f:
+    output_file_path = os.path.join('static', 'output.mp3')
+
+    with open(output_file_path, 'wb') as f:
         for chunk in response.iter_content(chunk_size=CHUNK_SIZE):
             if chunk:
                 f.write(chunk)
 
-    return render_template('/output_pages/accent.html', mp3_file_path = "mp3_test.mp3", app_data=app_data)
+    return render_template('/output_pages/accent.html', mp3_file_path = "output.mp3", app_data=app_data)
 
 @app.route('/flashcards')
 def flashcards():
