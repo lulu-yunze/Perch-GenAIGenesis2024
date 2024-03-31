@@ -2,7 +2,7 @@ from flask import *
 import os
 import assemblyai as aai
 from gemini import *
-import request
+import requests
 
 app = Flask(__name__)
 
@@ -116,7 +116,7 @@ def summary():
 
 
 @app.route('/translate')
-def translate():
+def translate2():
     preferred_language = request.args.get('parameter')
     with open(file_path, 'r') as f:
         text = f.read()
