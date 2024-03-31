@@ -2,7 +2,7 @@
 # pip3 install --upgrade --user google-cloud-aiplatform
 # gcloud auth application-default login
 
-#Run this file if you have the API key
+#Use this file if you have google cloud console installed and logged in
 import vertexai
 import google.generativeai as genai
 from vertexai.generative_models import (
@@ -15,11 +15,8 @@ from vertexai.generative_models import (
 )
 import markdown
 
-API_KEY = ''
-genai.configure(api_key=API_KEY)
-
 def text_to_notes(transcript):
-    multimodal_model = genai.GenerativeModel("gemini-1.0-pro")
+    multimodal_model = GenerativeModel("gemini-1.0-pro")
     response = multimodal_model.generate_content(
         [transcript, "Format this professionally in markdown, with headings, bolded keywords, and bullet points"]
     )
@@ -27,14 +24,14 @@ def text_to_notes(transcript):
     return html_text
 
 def clean_up_text(transcript):
-    multimodal_model = genai.GenerativeModel("gemini-1.0-pro")
+    multimodal_model = GenerativeModel("gemini-1.0-pro")
     response = multimodal_model.generate_content(
         [transcript, "Transform this text so it is grammatically correct, without stutters and repeated words"]
     )
     return response.text
 
 def translate(transcript, language):
-    multimodal_model = genai.GenerativeModel("gemini-1.0-pro")
+    multimodal_model = GenerativeModel("gemini-1.0-pro")
     prompt = f"Translate this passage to {language}"
     response = multimodal_model.generate_content([transcript, prompt])
     
@@ -42,7 +39,7 @@ def translate(transcript, language):
     return response.text
 
 def find_keywords(transcript):
-    multimodal_model = genai.GenerativeModel("gemini-1.0-pro")
+    multimodal_model = GenerativeModel("gemini-1.0-pro")
     response = multimodal_model.generate_content(
         [transcript, "What are the top 5 important keywords of the text? What does the text say about them?"]
     )
@@ -79,8 +76,6 @@ if __name__ == "__main__":
     
     flashcards, keywords_only = find_keywords(cleaned_text)
     print(keywords_only)
-    
-    
     
     
     
