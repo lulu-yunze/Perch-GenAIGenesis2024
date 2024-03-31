@@ -16,13 +16,13 @@
   </head>
 
   <body>
-
-    {% include 'includes/_verticalNavBar.html' %}
+    {%include 'includes/_navBar.html'%}
+    {% include 'includes/vertical_navBar.html' %}
 
     <main role="main" class="container">
       <div class="container">
-        <div class="starter-template">
-          <hr style="padding-top: 100px;">
+        <div class="starter-template" style="margin-right: 200px;">
+          
           {% block body %}
           {% endblock %}
         </div>
