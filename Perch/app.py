@@ -13,6 +13,11 @@ def index():
     app_data = {'project_name': 'Perch'}
     return render_template("index.html", app_data=app_data)
 
+@app.route('/vision')
+def about():
+    return render_template('vision.html', app_data=app_data)
+
+
 @app.route('/success', methods = ['POST'])  
 def success():  
     # Check if a file was uploaded
