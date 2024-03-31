@@ -45,16 +45,16 @@ def find_keywords(transcript):
     #descriptions_only: only the descriptions
     
     #Delete generation_config if it happens to bug out with API version...
-    generation_config = GenerationConfig(
-        temperature=0,          # higher = more creative (default 0.0)
-        top_p=0.4,                # higher = more random responses, response drawn from more possible next tokens (default 0.95)
-        top_k=30,                 # higher = more random responses, sample from more possible next tokens (default 40)
-        candidate_count=1,
-        max_output_tokens=1024,   # default = 2048
-    )   
+    #generation_config = GenerationConfig(
+    #    temperature=0,          # higher = more creative (default 0.0)
+    #    top_p=0.4,                # higher = more random responses, response drawn from more possible next tokens (default 0.95)
+    #    top_k=30,                 # higher = more random responses, sample from more possible next tokens (default 40)
+    #    candidate_count=1,
+    #    max_output_tokens=1024,   # default = 2048
+    #)   
     multimodal_model = GenerativeModel("gemini-1.0-pro")
     response = multimodal_model.generate_content(
-        [transcript, "What are the top 5 important keywords of the text? What does the text say about them?"], generation_config=generation_config
+        [transcript, "What are the top 5 important keywords of the text? What does the text say about them? Format the response as a Python list of keywords, and a list of descriptions"]
     )
     
     print(response.text)
@@ -84,10 +84,20 @@ def find_keywords(transcript):
         descriptions_only.append(shortened.split(":** ",1)[1].split("\n5.",1)[0])
         shortened = shortened.split(":** ",1)[1]
         descriptions_only.append(shortened.split(":** ",1)[1])
-    except:
-        keywords_only = response.text
-        descriptions_only = response.text
         
+        
+    except:
+        #new prompt
+        shortened = response.text
+        keywords_only = shortened.split("[", 1)[1].split("]", 1)[0].split(", ")
+        for i, string in enumerate(keywords_only):
+            keywords_only[i] = string.split("\"", 1)[1].split("\"", 1)[0]
+
+        shortened = shortened.split("]", 1)[1]
+        descriptions_only = shortened.split("[", 1)[1].split("]", 1)[0].split(", ")
+        for i, string in enumerate(descriptions_only):
+            descriptions_only[i] = string.split("\"", 1)[1].split("\"", 1)[0]
+
     return response.text, keywords_only, descriptions_only
 
     
@@ -100,7 +110,7 @@ if __name__ == "__main__":
     #print(response)
     
     #transcript = "Right? Because, because I want people to isolate, you know, jackets and shoes separately."
-    transcript = open("transcript.txt", "r")
+    transcript = open("Transcript.txt", "r")
     file = transcript.read()
     #print(transcript.read())
     notes_html = text_to_notes(file)
@@ -109,9 +119,9 @@ if __name__ == "__main__":
     print(notes_html)
     
     cleaned_text = clean_up_text(file)
-    print("\n")
-    print("\n")
-    print(cleaned_text)
+    #print("\n")
+    #print("\n")
+    #print(cleaned_text)
     
     #translated_text = translate(cleaned_text, "French")
     #print("\n")

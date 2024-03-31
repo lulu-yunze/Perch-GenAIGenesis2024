@@ -63,7 +63,7 @@ def find_keywords(transcript):
     #     [transcript, "What are the top 5 important keywords of the text? What does the text say about them?"], generation_config=generation_config
     # )
     response = multimodal_model.generate_content(
-        [transcript, "What are the top 5 important keywords of the text? What does the text say about them?"])
+        [transcript, "What are the top 5 important keywords of the text? What does the text say about them? Format the response as a Python list of keywords, and a list of descriptions"])
     
 
     #Uncomment if keywords_only and descriptions_only throw and error (probably because gemini generated in a different format)
@@ -92,8 +92,16 @@ def find_keywords(transcript):
         shortened = shortened.split(":** ",1)[1]
         descriptions_only.append(shortened.split(":** ",1)[1])
     except:
-        keywords_only = response.text
-        descriptions_only = response.text
+        #new prompt
+        shortened = response.text
+        keywords_only = shortened.split("[", 1)[1].split("]", 1)[0].split(", ")
+        for i, string in enumerate(keywords_only):
+            keywords_only[i] = string.split("\"", 1)[1].split("\"", 1)[0]
+
+        shortened = shortened.split("]", 1)[1]
+        descriptions_only = shortened.split("[", 1)[1].split("]", 1)[0].split(", ")
+        for i, string in enumerate(descriptions_only):
+            descriptions_only[i] = string.split("\"", 1)[1].split("\"", 1)[0]
     
     return response.text, keywords_only, descriptions_only
 
