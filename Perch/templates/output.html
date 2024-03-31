@@ -1,11 +1,40 @@
 {% extends 'layout2.html' %}
 
 {% block body %}
-<head>
-    <title>Output</title>
-</head>
-<body>
+<style>
+    /* Styling for typewriter text container */
+    .typewriter p {
+        font-family: monospace;
+        white-space: pre-wrap; /* Preserves whitespace and formatting */
+        overflow: hidden; /* Hides the text until it's "typed" */
+    }
+</style>
+<div class="container">
     <h1>Original Transcript</h1>
-    <p>{{ output }}</p>
-</body>
+    <div class="typewriter">
+        <p id="typewriter-text">{{ output | safe }}</p>
+    </div>
+</div>
+
+<script>
+    const textElement = document.getElementById('typewriter-text');
+    const text = textElement.innerText;
+    let index = 0;
+
+    // Clears the initial text
+    textElement.innerText = '';
+
+    function typeWriterEffect() {
+        if (index < text.length) {
+            // Adds the next character
+            textElement.innerText += text.charAt(index);
+            index++;
+            // Adjust the delay as needed
+            setTimeout(typeWriterEffect, 1);
+        }
+    }
+
+    // Start the typewriter effect once the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', typeWriterEffect);
+</script>
 {% endblock %}
