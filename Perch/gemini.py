@@ -15,7 +15,7 @@ from vertexai.generative_models import (
 )
 import markdown
 
-API_KEY = 'AIzaSyBhQF_6ANdTyD1L0tmP1MTJ3gNb6gmuwsU' #Add API key here
+API_KEY = '' #Add API key here
 genai.configure(api_key=API_KEY)
 
 def text_to_notes(transcript):
