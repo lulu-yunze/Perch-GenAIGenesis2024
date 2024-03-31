@@ -162,7 +162,7 @@ def accent():
             if chunk:
                 f.write(chunk)
 
-    return render_template('/output_pages/accent.html', mp3_file_path = "output.mp3", app_data=app_data)
+    return render_template('/output_pages/accent.html', mp3_file_path = "mp3_test.mp3", app_data=app_data)
 
 @app.route('/flashcards')
 def flashcards():
