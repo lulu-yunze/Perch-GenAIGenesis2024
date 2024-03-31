@@ -35,6 +35,7 @@ def clean_up_text(transcript):
 
 def translate(transcript, language):
     multimodal_model = genai.GenerativeModel("gemini-1.0-pro")
+    transcript = clean_up_text(transcript)
     prompt = f"Translate this passage to {language}"
     response = multimodal_model.generate_content([transcript, prompt])
     

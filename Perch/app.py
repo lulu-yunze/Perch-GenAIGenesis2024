@@ -128,7 +128,7 @@ def translate2():
 @app.route('/accent')
 def accent():
     preferred_accent = request.args.get('parameter')
-
+    
     CHUNK_SIZE = 1024
     if preferred_accent == "female-american":
         url = "https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM"
