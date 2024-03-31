@@ -1,5 +1,6 @@
 from flask import *
 import os
+import assemblyai as aai
 
 app = Flask(__name__)
 
@@ -23,8 +24,11 @@ def success():
     
     # Save the uploaded file
     file_path = os.path.join('uploads', file.filename)
-    print(file_path)
     file.save(file_path)
+
+    if file.filename.endswith('.mp3'):
+        transcribe_audio(file_path)
+        file_path = os.path.join('uploads', file.filename + "transcribed")
     
     # Call your Python script to process the uploaded file
     output = run_python_script(file_path)
@@ -39,6 +43,32 @@ def run_python_script(file_path):
     
     with open(file_path, 'r') as f:
         return f.read()
+
+def transcribe_audio(file_path):
+
+    # Replace with your API key
+    aai.settings.api_key = "ce7e699b08654c93bd8db3f5fe302921"
+
+    # URL of the file to transcribe
+    FILE_URL = file_path
+
+    # You can also transcribe a local file by passing in a file path
+    # FILE_URL = './path/to/file.mp3'
+
+    config = aai.TranscriptionConfig(auto_highlights=True)
+
+    transcriber = aai.Transcriber()
+    transcript = transcriber.transcribe(
+    FILE_URL,
+    config=config
+    )
+
+    transcription_text = transcript.text
+    transcribed_file_path = os.path.join(file_path + "transcribed")
+    with open(transcribed_file_path, 'w') as file:
+        file.write(transcription_text)
+
+    return transcript.text
     
 @app.route('/show_output')
 def show_output():
