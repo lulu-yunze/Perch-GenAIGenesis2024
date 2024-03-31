@@ -128,7 +128,7 @@ def translate2():
 @app.route('/accent')
 def accent():
     preferred_accent = request.args.get('parameter')
-    
+
     CHUNK_SIZE = 1024
     if preferred_accent == "female-american":
         url = "https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM"
@@ -166,7 +166,11 @@ def accent():
 
 @app.route('/flashcards')
 def flashcards():
-    return render_template('/output_pages/flashcards.html', app_data=app_data)
+    with open(file_path, 'r') as f:
+        text = f.read()
+    full,keyword,description = find_keywords(text)
+    print("smth", keyword, description,"smth else")
+    return render_template('/output_pages/flashcards.html', keyword = keyword, description = description, app_data=app_data)
 
 
 

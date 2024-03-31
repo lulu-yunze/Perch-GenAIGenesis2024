@@ -43,23 +43,27 @@ def translate(transcript, language):
     return response.text
 
 def find_keywords(transcript):
+    transcript = clean_up_text(transcript)
+    
     #Returns: 
     #response.text: keywords and descriptions together
     #keywords_only: only the keywords
     #descriptions_only: only the descriptions
     
     #Delete generation_config if it happens to bug out with API version...
-    generation_config = GenerationConfig(
-        temperature=0,          # higher = more creative (default 0.0)
-        top_p=0.4,                # higher = more random responses, response drawn from more possible next tokens (default 0.95)
-        top_k=30,                 # higher = more random responses, sample from more possible next tokens (default 40)
-        candidate_count=1,
-        max_output_tokens=1024,   # default = 2048
-    )   
+    # generation_config = GenerationConfig(
+    #     temperature=0,          # higher = more creative (default 0.0)
+    #     top_p=0.4,                # higher = more random responses, response drawn from more possible next tokens (default 0.95)
+    #     top_k=30,                 # higher = more random responses, sample from more possible next tokens (default 40)
+    #     candidate_count=1,
+    #     max_output_tokens=1024,   # default = 2048
+    # )   
     multimodal_model = genai.GenerativeModel("gemini-1.0-pro")
+    # response = multimodal_model.generate_content(
+    #     [transcript, "What are the top 5 important keywords of the text? What does the text say about them?"], generation_config=generation_config
+    # )
     response = multimodal_model.generate_content(
-        [transcript, "What are the top 5 important keywords of the text? What does the text say about them?"], generation_config=generation_config
-    )
+        [transcript, "What are the top 5 important keywords of the text? What does the text say about them?"])
     
 
     #Uncomment if keywords_only and descriptions_only throw and error (probably because gemini generated in a different format)
