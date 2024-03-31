@@ -1,0 +1,41 @@
+CSI 3505 Notes du premier devoir:
+
+- Mieux vaut suivre mon intuition
+- Bien lire l'énoncé
+- Apprendre à faire l'analyse du cas moyen
+- Mettre les paramètres, input et output de fonction en pseudo-code
+- Bien penser aux contre- exemples
+- Réviser les méthodes de preuve
+- Nombre d'étapes = nombre the pas qu'
+
+Brownies at Midnight, Are a delight akin to those, Sweet dreams of mine
+
+
+📓 3rd Year Maths-CS (data science specialisation)
+
+🎤 French, English 
+
+💻 Java, Php, CSS, Javascript, SQL, Python, R, Golang
+
+🗃️Experience in :
+
+  - Web development 
+  - Android Apps
+  - Database design
+
+⚙️Familiar with:
+  - React
+  - Firebase
+  - MySQL
+  - Jupyter Notebook 
+  - RStudio
+  - Numpy
+  - Altair
+  - Pandas
+
+❕Interested in:
+
+  - UI/UX design
+  - Machine learning 
+
+➗ Currently learning Probability and Statistics
