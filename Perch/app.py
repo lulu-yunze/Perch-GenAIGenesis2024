@@ -2,6 +2,7 @@ from flask import *
 import os
 import assemblyai as aai
 from gemini import *
+import request
 
 app = Flask(__name__)
 
@@ -116,11 +117,50 @@ def summary():
 
 @app.route('/translate')
 def translate():
-    return render_template('/output_pages/translate.html', app_data=app_data)
+    preferred_language = request.args.get('parameter')
+    with open(file_path, 'r') as f:
+        text = f.read()
+    translated_transcript = translate(text,preferred_language)
+
+    return render_template('/output_pages/translate.html', output=translated_transcript, app_data=app_data)
 
 
 @app.route('/accent')
 def accent():
+    preferred_accent = request.args.get('parameter')
+
+    CHUNK_SIZE = 1024
+    if preferred_accent == "female-american":
+        url = "https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM"
+    elif preferred_accent == "male-american":
+        url = "https://api.elevenlabs.io/v1/text-to-speech/29vD33N1CtxCmqQRPOHJ"
+    elif preferred_accent == "female-british":
+        url = "https://api.elevenlabs.io/v1/text-to-speech/ThT5KcBeYPX3keUQqHPh"
+    elif preferred_accent == "male-british":
+        url = "https://api.elevenlabs.io/v1/text-to-speech/Yko7PKHZNXotIFUBG7I9"
+
+    with open(file_path, 'r') as f:
+            text_to_read = f.read()
+
+    headers = {
+    "Accept": "audio/mpeg",
+    "Content-Type": "application/json",
+    "xi-api-key": "7245d2ffc12dd96537f08aaeb92495e8"
+    }
+
+    data = {
+    "text": text_to_read,
+    "voice_settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.5
+    }
+    }
+
+    response = requests.post(url, json=data, headers=headers)
+    with open('output.mp3', 'wb') as f:
+        for chunk in response.iter_content(chunk_size=CHUNK_SIZE):
+            if chunk:
+                f.write(chunk)
     return render_template('/output_pages/accent.html', app_data=app_data)
 
 @app.route('/flashcards')

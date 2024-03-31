@@ -50,7 +50,7 @@
             background-color: #9FE4F3;
             color: black;
         }
-        
+
         /* Additional styling for the paragraph to ensure consistency */
         .navbarr p {
             text-align: center;
@@ -59,39 +59,50 @@
             background-color: #EBFDFF; /* Matches navbar background */
             border-radius: 12px; /* Consistent with anchor style */
         }
+
+        /* Style for the subnav */
+        .sub_nav {
+            display: none; /* Hide the subnav by default */
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Show the subnav when hovering over the "Accent" link */
+        #accent_wrapper:hover .sub_nav {
+            display: block;
+        }
     </style>
 </head>
 <body>
-<script>
-    // Variable to hold the name of the list item to be colored differently
-    var listItemToColor;   // Change this to the name of the list item you want to color differently
-
-    // Function to color the list item differently
-    function colorListItem() {
-        var listItems = document.querySelectorAll(".navbarr li a");
-        for (var i = 0; i < listItems.length; i++) {
-            if (listItems[i].id === listItemToColor) {
-                listItems[i].style.backgroundColor = "#135F7E";
-                listItems[i].style.color = "white"; // Change this to the color you want
-            }
-        }
-    }
-
-    // Call the function when the document is loaded
-    document.addEventListener("DOMContentLoaded", colorListItem);
-</script>
-    
 <ul class="navbarr">
     <p>How can I help you study today?</p>
     <li><a id="transcript" href="/transcript">Clean Transcript</a></li>
     <li><a id="summary" href="/summary">Summary</a></li>
-    <li><a id="translate" href="/translate">Translate to my language</a></li>
-    <li><a id="accent" href="/accent">Translate to my Accent</a></li>
+    <li id="accent_wrapper">
+        <a id="translate" href="/translate">Translate to my language</a>
+        <ul class="sub_nav">
+            <li><a href="/translate?parameter=French">French</a></li>
+            <li><a href="/translate?parameter=Chinese">Chinese</a></li>
+            <li><a href="/translate?parameter=Spanish">Spanish</a></li>
+            <li><a href="/translate?parameter=Bengali">Bengali</a></li>
+        </ul>
+    </li>
+    <li id="accent_wrapper">
+        <a id="accent" href="/accent">Translate to my Accent</a>
+        <ul class="sub_nav">
+            <li><a href="/accent?parameter=female-american">Female American</a></li>
+            <li><a href="/accent?parameter=male-american">Male American</a></li>
+            <li><a href="/accent?parameter=female-british">Female British</a></li>
+            <li><a href="/accent?parameter=male-british">Male British</a></li>
+        </ul>
+    </li>
     <li><a id="flashcards" href="/flashcards">Flashcards</a></li>
 </ul>
 
-
-
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>
