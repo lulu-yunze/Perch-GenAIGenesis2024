@@ -47,8 +47,8 @@ def find_keywords(transcript):
     #Delete generation_config if it happens to bug out with API version...
     generation_config = GenerationConfig(
         temperature=0,          # higher = more creative (default 0.0)
-        top_p=0.7,                # higher = more random responses, response drawn from more possible next tokens (default 0.95)
-        top_k=40,                 # higher = more random responses, sample from more possible next tokens (default 40)
+        top_p=0.4,                # higher = more random responses, response drawn from more possible next tokens (default 0.95)
+        top_k=30,                 # higher = more random responses, sample from more possible next tokens (default 40)
         candidate_count=1,
         max_output_tokens=1024,   # default = 2048
     )   
@@ -57,32 +57,37 @@ def find_keywords(transcript):
         [transcript, "What are the top 5 important keywords of the text? What does the text say about them?"], generation_config=generation_config
     )
     
+    print(response.text)
 
     #Uncomment if keywords_only and descriptions_only throw and error (probably because gemini generated in a different format)
     #keywords = multimodal_model.generate_content([response.text, "List the keywords in this text"])
     #descriptions = multimodal_model.generate_content([response.text, "List the descriptions in this text"])
     
-    #Get only the keywords (front of the flashcards)
-    keywords_only = []
-    keywords_only.append(response.text.split("1. **",1)[1].split(":**",1)[0])
-    keywords_only.append(response.text.split("2. **",1)[1].split(":**",1)[0])
-    keywords_only.append(response.text.split("3. **",1)[1].split(":**",1)[0])
-    keywords_only.append(response.text.split("4. **",1)[1].split(":**",1)[0])
-    keywords_only.append(response.text.split("5. **",1)[1].split(":**",1)[0])
+    try: 
+        #Get only the keywords (front of the flashcards)
+        keywords_only = []
+        keywords_only.append(response.text.split("1. **",1)[1].split(":**",1)[0])
+        keywords_only.append(response.text.split("2. **",1)[1].split(":**",1)[0])
+        keywords_only.append(response.text.split("3. **",1)[1].split(":**",1)[0])
+        keywords_only.append(response.text.split("4. **",1)[1].split(":**",1)[0])
+        keywords_only.append(response.text.split("5. **",1)[1].split(":**",1)[0])
 
-    #Get only the descriptions (back of the flashcards)
-    descriptions_only = []
-    shortened = response.text.split(":**",1)[1]
-    descriptions_only.append(shortened.split(":** ",1)[1].split("\n2.",1)[0])
-    shortened = shortened.split(":** ",1)[1]
-    descriptions_only.append(shortened.split(":** ",1)[1].split("\n3.",1)[0])
-    shortened = shortened.split(":** ",1)[1]
-    descriptions_only.append(shortened.split(":** ",1)[1].split("\n4.",1)[0])
-    shortened = shortened.split(":** ",1)[1]
-    descriptions_only.append(shortened.split(":** ",1)[1].split("\n5.",1)[0])
-    shortened = shortened.split(":** ",1)[1]
-    descriptions_only.append(shortened.split(":** ",1)[1])
-    
+        #Get only the descriptions (back of the flashcards)
+        descriptions_only = []
+        shortened = response.text.split(":**",1)[1]
+        descriptions_only.append(shortened.split(":** ",1)[1].split("\n2.",1)[0])
+        shortened = shortened.split(":** ",1)[1]
+        descriptions_only.append(shortened.split(":** ",1)[1].split("\n3.",1)[0])
+        shortened = shortened.split(":** ",1)[1]
+        descriptions_only.append(shortened.split(":** ",1)[1].split("\n4.",1)[0])
+        shortened = shortened.split(":** ",1)[1]
+        descriptions_only.append(shortened.split(":** ",1)[1].split("\n5.",1)[0])
+        shortened = shortened.split(":** ",1)[1]
+        descriptions_only.append(shortened.split(":** ",1)[1])
+    except:
+        keywords_only = response.text
+        descriptions_only = response.text
+        
     return response.text, keywords_only, descriptions_only
 
     
@@ -98,10 +103,10 @@ if __name__ == "__main__":
     transcript = open("transcript.txt", "r")
     file = transcript.read()
     #print(transcript.read())
-    #notes_html = text_to_notes(file)
+    notes_html = text_to_notes(file)
     #print("\n")
     #print("\n")
-    #print(notes_html)
+    print(notes_html)
     
     cleaned_text = clean_up_text(file)
     print("\n")
