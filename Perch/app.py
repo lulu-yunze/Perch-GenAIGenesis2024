@@ -7,6 +7,8 @@ import requests
 app = Flask(__name__)
 
 app_data = {'project_name': 'Perch'}
+app.secret_key = 'your_secret_key_here'
+
 
 @app.route("/")
 def index():
@@ -40,12 +42,17 @@ def success():
     if file.filename.endswith('.mp3'):
         transcribe_audio(file_path)
         file_path = os.path.join('uploads', file.filename + "transcribed")
+
+    session['file_path'] = file_path
     
     # Call your Python script to process the uploaded file
     output = run_python_script(file_path)
     
     # Redirect to another HTML page with the output
     return redirect(url_for('show_output', output=output))
+
+def get_session():
+    return session.get('file_path')
 
 def run_python_script(file_path):
     # Your code to run the Python script and process the uploaded file
@@ -95,6 +102,7 @@ def transcript():
     #original_transcript = request.args.get('output', '')
 
     # Call clean_up_text function with the original transcript
+    file_path = get_session()
     with open(file_path, 'r') as f:
         text = f.read()
     cleaned_transcript = clean_up_text(text)
@@ -106,6 +114,7 @@ def transcript():
 
 @app.route('/summary')
 def summary():
+    file_path = get_session()
     with open(file_path, 'r') as f:
         text = f.read()
     summarized_transcript = text_to_notes(text)
@@ -118,6 +127,7 @@ def summary():
 @app.route('/translate')
 def translate2():
     preferred_language = request.args.get('parameter')
+    file_path = get_session()
     with open(file_path, 'r') as f:
         text = f.read()
     translated_transcript = translate(text,preferred_language)
@@ -139,6 +149,7 @@ def accent():
     elif preferred_accent == "male-british":
         url = "https://api.elevenlabs.io/v1/text-to-speech/Yko7PKHZNXotIFUBG7I9"
 
+    file_path = get_session()
     with open(file_path, 'r') as f:
             text_to_read = f.read()
 
@@ -168,6 +179,8 @@ def accent():
 
 @app.route('/flashcards')
 def flashcards():
+    
+    file_path = get_session()
     with open(file_path, 'r') as f:
         text = f.read()
     full,keyword,description = find_keywords(text)
