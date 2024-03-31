@@ -17,18 +17,16 @@
 
   <body>
 
-    {% include 'includes/_navBar.html' %}
-
-    <main role="main" class="container">
-      <div class="container">
-        <div class="starter-template">
-          <hr style="padding-top: 100px;">
-          {% block body %}
-          {% endblock %}
-        </div>
-      </div>
-
+    {% include 'includes/_navbar.html' %}
+    
+    {% block body %}
+   
+    <main role="main" class="container d-flex flex-row" style="margin: 0;">
+      
+        TXT
     </main><!-- /.container -->
+
+    {% endblock %}
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

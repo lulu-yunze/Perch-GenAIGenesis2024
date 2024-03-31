@@ -79,6 +79,10 @@ def show_output():
     output = request.args.get('output', '')
     return render_template('output.html', output=output, app_data=app_data)
 
+@app.route('/dev')
+def dev():
+    app_data = {'project_name': 'Perch'}
+    return render_template('dev.html', app_data=app_data)
 
 if __name__ == "__main__":
     app.run(debug=True)
