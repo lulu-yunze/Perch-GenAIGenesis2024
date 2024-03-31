@@ -15,7 +15,7 @@ from vertexai.generative_models import (
 )
 import markdown
 
-API_KEY = ''
+API_KEY = '' #Add API key here
 genai.configure(api_key=API_KEY)
 
 def text_to_notes(transcript):
@@ -42,10 +42,21 @@ def translate(transcript, language):
     return response.text
 
 def find_keywords(transcript):
+    #Returns: 
+    #response.text: keywords and descriptions together
+    #keywords_only: only the keywords
+    #descriptions_only: only the descriptions
+    
     multimodal_model = genai.GenerativeModel("gemini-1.0-pro")
     response = multimodal_model.generate_content(
         [transcript, "What are the top 5 important keywords of the text? What does the text say about them?"]
     )
+
+    #Uncomment if keywords_only and descriptions_only throw and error (probably because gemini generated in a different format)
+    #keywords = multimodal_model.generate_content([response.text, "List the keywords in this text"])
+    #descriptions = multimodal_model.generate_content([response.text, "List the descriptions in this text"])
+    
+    #Get only the keywords (front of the flashcards)
     keywords_only = []
     keywords_only.append(response.text.split("1. **",1)[1].split(":**",1)[0])
     keywords_only.append(response.text.split("2. **",1)[1].split(":**",1)[0])
@@ -53,7 +64,20 @@ def find_keywords(transcript):
     keywords_only.append(response.text.split("4. **",1)[1].split(":**",1)[0])
     keywords_only.append(response.text.split("5. **",1)[1].split(":**",1)[0])
 
-    return response.text, keywords_only
+    #Get only the descriptions (back of the flashcards)
+    descriptions_only = []
+    shortened = response.text.split(":**",1)[1]
+    descriptions_only.append(shortened.split(":** ",1)[1].split("\n2.",1)[0])
+    shortened = shortened.split(":** ",1)[1]
+    descriptions_only.append(shortened.split(":** ",1)[1].split("\n3.",1)[0])
+    shortened = shortened.split(":** ",1)[1]
+    descriptions_only.append(shortened.split(":** ",1)[1].split("\n4.",1)[0])
+    shortened = shortened.split(":** ",1)[1]
+    descriptions_only.append(shortened.split(":** ",1)[1].split("\n5.",1)[0])
+    shortened = shortened.split(":** ",1)[1]
+    descriptions_only.append(shortened.split(":** ",1)[1])
+    
+    return response.text, keywords_only, descriptions_only
 
     
 if __name__ == "__main__":
@@ -65,7 +89,7 @@ if __name__ == "__main__":
     #print(response)
     
     #transcript = "Right? Because, because I want people to isolate, you know, jackets and shoes separately."
-    transcript = open("transcript.txt", "r")
+    transcript = open("Transcript.txt", "r")
     file = transcript.read()
     #print(transcript.read())
     notes_html = text_to_notes(file)
