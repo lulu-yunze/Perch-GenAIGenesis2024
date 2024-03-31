@@ -1,6 +1,7 @@
 from flask import *
 import os
 import assemblyai as aai
+from gemini import *
 
 app = Flask(__name__)
 
@@ -25,6 +26,8 @@ def success():
         return "Empty filename"
     
     # Save the uploaded file
+    global file_path
+
     file_path = os.path.join('uploads', file.filename)
     file.save(file_path)
 
@@ -82,29 +85,41 @@ def show_output():
 @app.route('/transcript')
 def transcript():
     app_data = {'project_name': 'Perch'}
-    return render_template('/output_pages/transcript.html', app_data=app_data)
+    # Get the original transcript text from the query parameter
+    #original_transcript = request.args.get('output', '')
+
+    # Call clean_up_text function with the original transcript
+    with open(file_path, 'r') as f:
+        text = f.read()
+    cleaned_transcript = clean_up_text(text)
+    
+
+    # Pass the cleaned transcript to the template
+    return render_template('/output_pages/transcript.html', output=cleaned_transcript, app_data=app_data)
 
 
 @app.route('/summary')
 def summary():
-    app_data = {'project_name': 'Perch'}
-    return render_template('/output_pages/summary.html', app_data=app_data)
+    with open(file_path, 'r') as f:
+        text = f.read()
+    summarized_transcript = text_to_notes(text)
+    
+
+    # Pass the cleaned transcript to the template
+    return render_template('/output_pages/summary.html', output=summarized_transcript, app_data=app_data)
 
 
 @app.route('/translate')
 def translate():
-    app_data = {'project_name': 'Perch'}
     return render_template('/output_pages/translate.html', app_data=app_data)
 
 
 @app.route('/accent')
 def accent():
-    app_data = {'project_name': 'Perch'}
     return render_template('/output_pages/accent.html', app_data=app_data)
 
 @app.route('/flashcards')
 def flashcards():
-    app_data = {'project_name': 'Perch'}
     return render_template('/output_pages/flashcards.html', app_data=app_data)
 
 
