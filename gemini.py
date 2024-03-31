@@ -3,6 +3,7 @@
 # gcloud auth application-default login
 
 import vertexai
+import google.generativeai as genai
 from vertexai.generative_models import (
     GenerationConfig,
     GenerativeModel,
@@ -11,6 +12,8 @@ from vertexai.generative_models import (
     Image,
     Part,
 )
+API_KEY = ''
+genai.configure(api_key=API_KEY)
 
 safety_settings = {
     HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
@@ -19,10 +22,11 @@ safety_settings = {
     HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
 }
 
+
 def generate_text(project_id: str, location: str) -> str:
 #https://cloud.google.com/vertex-ai/generative-ai/docs/samples/generativeaionvertexai-gemini-get-started
     # Load the model
-    multimodal_model = GenerativeModel("gemini-1.0-pro-vision")
+    multimodal_model = genai.GenerativeModel("gemini-1.0-pro-vision")
     # Query the model
     response = multimodal_model.generate_content(
         [
@@ -38,14 +42,14 @@ def generate_text(project_id: str, location: str) -> str:
     return response.text
 
 def text_to_notes(transcript):
-    multimodal_model = GenerativeModel("gemini-1.0-pro")
+    multimodal_model = genai.GenerativeModel("gemini-1.0-pro")
     response = multimodal_model.generate_content(
         [transcript, "Format this professionally in markdown, with headings, bolded keywords, and bullet points"], safety_settings=safety_settings
     )
     return response.text
 
 def clean_up_text(transcript, format=None):
-    multimodal_model = GenerativeModel("gemini-1.0-pro")
+    multimodal_model = genai.GenerativeModel("gemini-1.0-pro")
     response = multimodal_model.generate_content(
         [transcript, "Transform this text so it is grammatically correct, without stutters and repeated words"], safety_settings=safety_settings
     )
@@ -58,13 +62,13 @@ def clean_up_text(transcript, format=None):
     return response.text
 
 def translate(transcript, language):
-    multimodal_model = GenerativeModel("gemini-1.0-pro")
+    multimodal_model = genai.GenerativeModel("gemini-1.0-pro")
     prompt = f"Translate this passage to {language}"
     response = multimodal_model.generate_content([transcript, prompt], safety_settings=safety_settings)
     return response.text
 
 def find_keywords(transcript):
-    multimodal_model = GenerativeModel("gemini-1.0-pro")
+    multimodal_model = genai.GenerativeModel("gemini-1.0-pro")
     response = multimodal_model.generate_content(
         [transcript, "What are the top 5 important keywords of the text? What does the text say about them?"], safety_settings=safety_settings
     )
@@ -72,13 +76,20 @@ def find_keywords(transcript):
     keywords_only.append(response.text.split("1. **",1)[1].split(":**",1)[0])
     keywords_only.append(response.text.split("2. **",1)[1].split(":**",1)[0])
     keywords_only.append(response.text.split("3. **",1)[1].split(":**",1)[0])
-    #keywords_only.append(response.text.split("4. **",1)[1].split(":**",1)[0])
-    #keywords_only.append(response.text.split("5. **",1)[1].split(":**",1)[0])
+    keywords_only.append(response.text.split("4. **",1)[1].split(":**",1)[0])
+    keywords_only.append(response.text.split("5. **",1)[1].split(":**",1)[0])
+
+    description_only = []
+    description_only.append(response.text.split(":**",1)[1].split("2. **",1)[0])
+    description_only.append(response.text.split(":**",1)[1].split("3. **",1)[0])
+    description_only.append(response.text.split(":**",1)[1].split("4. **",1)[0])
+    description_only.append(response.text.split(":**",1)[1].split("5. **",1)[0])
+    return response.text, keywords_only, description_only
 
     return response.text, keywords_only
 
 def generate_images(transcript, keywords=None):
-    model = GenerativeModel("imagegeneration")
+    model = genai.GenerativeModel("imagegeneration")
     if keywords != None:
         response = model.generate_content([keywords, "Generate an image for each keyword"], safety_settings=safety_settings)
     else: 
@@ -107,6 +118,8 @@ if __name__ == "__main__":
     
     flashcards, keywords_only = find_keywords(cleaned_text)
     print(keywords_only)
+    
+    
     
     
     
