@@ -7,29 +7,28 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* Custom styles for the vertical navbar */
         .vertical-nav {
             position: fixed;
-            top: 0;
+            top: 75px;
             right: 0;
-            width: 200px; /* Adjust width of the navbar */
-            height: 100vh; /* Full-height */
-            border-left: 1px solid #ddd; /* Add a left border */
-            background-color: #f8f9fa; /* Light background color */
-            padding-top: 20px; /* Space at the top */
+            width: 200px;
+            height: 100vh;
+            border-left: 1px solid #ddd;
+            background-color: #f8f9fa;
+            padding-top: 20px;
         }
-
+        
         .vertical-nav .nav-link {
-            color: #333; /* Darker link color */
+            color: #333;
         }
-
+        
         .vertical-nav .nav-link:hover {
-            color: #007bff; /* Bootstrap primary color on hover */
+            color: #007bff;
         }
-
-        /* Padding for the main content */
-        .main-content {
-            padding-left: 220px; /* Equal to navbar width plus some extra */
+        
+        /* Add spacing to each navbar item */
+        .vertical-nav .nav-item {
+            margin-bottom: 40px; /* Adjust the spacing as needed */
         }
     </style>
 </head>
@@ -62,16 +61,19 @@
 <div class="vertical-nav bg-light" id="sidebar">
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link" href="#">Link 1</a>
+            <a class="nav-link" href="#">Clean Transcript</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Link 2</a>
+            <a class="nav-link" href="#">Summary</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Link 3</a>
+            <a class="nav-link" href="#">Translated</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Link 4</a>
+            <a class="nav-link" href="#">Flashcards</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Different Accents</a>
         </li>
     </ul>
 </div>
