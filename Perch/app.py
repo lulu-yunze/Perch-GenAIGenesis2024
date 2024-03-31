@@ -161,7 +161,8 @@ def accent():
         for chunk in response.iter_content(chunk_size=CHUNK_SIZE):
             if chunk:
                 f.write(chunk)
-    return render_template('/output_pages/accent.html', app_data=app_data)
+
+    return render_template('/output_pages/accent.html', mp3_file_path = "output.mp3", app_data=app_data)
 
 @app.route('/flashcards')
 def flashcards():
