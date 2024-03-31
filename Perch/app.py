@@ -4,6 +4,8 @@ import assemblyai as aai
 
 app = Flask(__name__)
 
+app_data = {'project_name': 'Perch'}
+
 @app.route("/")
 def index():
     # Assuming you're passing the project name dynamically
@@ -73,8 +75,9 @@ def transcribe_audio(file_path):
 @app.route('/show_output')
 def show_output():
     # Retrieve the output from the query parameter
+    
     output = request.args.get('output', '')
-    return render_template('output.html', output=output)
+    return render_template('output.html', output=output, app_data=app_data)
 
 
 if __name__ == "__main__":
