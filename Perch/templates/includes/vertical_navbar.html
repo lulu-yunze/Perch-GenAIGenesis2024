@@ -62,13 +62,32 @@
     </style>
 </head>
 <body>
+<script>
+    // Variable to hold the name of the list item to be colored differently
+    var listItemToColor;   // Change this to the name of the list item you want to color differently
+
+    // Function to color the list item differently
+    function colorListItem() {
+        var listItems = document.querySelectorAll(".navbarr li a");
+        for (var i = 0; i < listItems.length; i++) {
+            if (listItems[i].id === listItemToColor) {
+                listItems[i].style.backgroundColor = "#135F7E";
+                listItems[i].style.color = "white"; // Change this to the color you want
+            }
+        }
+    }
+
+    // Call the function when the document is loaded
+    document.addEventListener("DOMContentLoaded", colorListItem);
+</script>
+    
 <ul class="navbarr">
     <p>How can I help you study today?</p>
-    <li><a href="#home">Clean Transcript</a></li>
-    <li><a href="#about">Summary</a></li>
-    <li><a href="#services">Translate to my language</a></li>
-    <li><a href="#contact">Translate to my Accent</a></li>
-    <li><a href="#contact">Flashcards</a></li>
+    <li><a id="transcript" href="/transcript">Clean Transcript</a></li>
+    <li><a id="summary" href="/summary">Summary</a></li>
+    <li><a id="translate" href="/translate">Translate to my language</a></li>
+    <li><a id="accent" href="/accent">Translate to my Accent</a></li>
+    <li><a id="flashcards" href="/flashcards">Flashcards</a></li>
 </ul>
 
 <!-- Bootstrap Bundle with Popper -->

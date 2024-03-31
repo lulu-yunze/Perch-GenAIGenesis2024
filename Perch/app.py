@@ -79,10 +79,35 @@ def show_output():
     output = request.args.get('output', '')
     return render_template('output.html', output=output, app_data=app_data)
 
-@app.route('/dev')
-def dev():
+@app.route('/transcript')
+def transcript():
     app_data = {'project_name': 'Perch'}
-    return render_template('dev.html', app_data=app_data)
+    return render_template('/output_pages/transcript.html', app_data=app_data)
+
+
+@app.route('/summary')
+def summary():
+    app_data = {'project_name': 'Perch'}
+    return render_template('/output_pages/summary.html', app_data=app_data)
+
+
+@app.route('/translate')
+def translate():
+    app_data = {'project_name': 'Perch'}
+    return render_template('/output_pages/translate.html', app_data=app_data)
+
+
+@app.route('/accent')
+def accent():
+    app_data = {'project_name': 'Perch'}
+    return render_template('/output_pages/accent.html', app_data=app_data)
+
+@app.route('/flashcards')
+def flashcards():
+    app_data = {'project_name': 'Perch'}
+    return render_template('/output_pages/flashcards.html', app_data=app_data)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
