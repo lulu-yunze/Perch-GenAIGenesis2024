@@ -10,7 +10,168 @@
 
 </head>
 <body>
-    <h1>Output of Python Script:</h1>
-    <pre>{{ output }}</pre>
+    <div class="container mt-4">
+        <div id="flashcards-container" class="card-container">
+            <!-- Flashcard 1 -->
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-front">
+                        <h2>Question 1</h2>
+                        <p>What is the capital of France?</p>
+                    </div>
+                    <div class="card-back">
+                        <p>Answer: Paris</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-front">
+                        <h2>Question 1</h2>
+                        <p>What is the capital of Germany?</p>
+                    </div>
+                    <div class="card-back">
+                        <p>Answer: Paris</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-front">
+                        <h2>Question 1</h2>
+                        <p>What is the capital of UK?</p>
+                    </div>
+                    <div class="card-back">
+                        <p>Answer: Paris</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Flashcard 2 -->
+            <!-- Repeat for each flashcard -->
+        </div>
+        
+        <!-- Navigation Arrows -->
+        <button id="prev" class="arrow">&lt;</button>
+        <button id="next"class="arrow">&gt;</button>
+    </div>
 </body>
+
+<style>
+
+    body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+.arrow {
+    
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    font-size: 24px;
+    z-index: 100;
+}
+
+
+#prev {
+    margin-left: 350px;
+    left: 30px;
+}
+
+#next {
+    margin-right: 460px;
+    right: 30px;
+}
+
+/* Ensure only the first card is shown initially */
+.card {
+    display: none;
+}
+
+.card:first-child {
+    display: block;
+}
+
+
+.card-container {
+    margin-left: -200px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    width: 200px;
+    height: 300px;
+    perspective: 1000px; /* For 3D flipping effect */
+}
+
+.card-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.75, 0, 0.85, 1);
+    cursor: pointer;
+}
+
+.card:hover .card-content {
+    transform: rotateY(180deg); /* Flip the card on hover */
+}
+
+.card-front, .card-back {
+    
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hide the back side when flipping */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-family: Arial, sans-serif;
+    border-radius: 10px;
+}
+
+.card-front {
+    background-color: rgb(19, 95, 126);
+}
+
+.card-back {
+    background-color: #94D6E6;
+    transform: rotateY(180deg); /* Flip the back side */
+}
+
+
+</style>
+
+<script>
+    let currentCardIndex = 0;
+    const cards = document.querySelectorAll('.card');
+    const totalCards = cards.length;
+
+    function showCard(index) {
+        cards.forEach((card, i) => {
+            card.style.display = i === index ? 'block' : 'none';
+        });
+    }
+
+    document.getElementById('next').addEventListener('click', () => {
+        currentCardIndex = (currentCardIndex + 1) % totalCards;
+        showCard(currentCardIndex);
+    });
+
+    document.getElementById('prev').addEventListener('click', () => {
+        currentCardIndex = (currentCardIndex - 1 + totalCards) % totalCards;
+        showCard(currentCardIndex);
+    });
+
+    // Initially display the first card
+    showCard(currentCardIndex);
+</script>
+
 {% endblock %}
