@@ -63,7 +63,7 @@ def find_keywords(transcript):
     #     [transcript, "What are the top 5 important keywords of the text? What does the text say about them?"], generation_config=generation_config
     # )
     response = multimodal_model.generate_content(
-        [transcript, "What are the top 5 important keywords of the text? What does the text say about them? Format the response as a Python list of keywords, and a list of descriptions"])
+        [transcript, "What are the top 5 important keywords of the text? Give it a header \"Top keywords\" and format them as \"1. **Word:** description\""])
     
 
     #Uncomment if keywords_only and descriptions_only throw and error (probably because gemini generated in a different format)
@@ -93,15 +93,8 @@ def find_keywords(transcript):
         descriptions_only.append(shortened.split(":** ",1)[1])
     except:
         #new prompt
-        shortened = response.text
-        keywords_only = shortened.split("[", 1)[1].split("]", 1)[0].split(", ")
-        for i, string in enumerate(keywords_only):
-            keywords_only[i] = string.split("\"", 1)[1].split("\"", 1)[0]
-
-        shortened = shortened.split("]", 1)[1]
-        descriptions_only = shortened.split("[", 1)[1].split("]", 1)[0].split(", ")
-        for i, string in enumerate(descriptions_only):
-            descriptions_only[i] = string.split("\"", 1)[1].split("\"", 1)[0]
+        keywords_only = [0, 0, 0, 0, 0]
+        descriptions_only = [0, 0, 0, 0, 0]
     
     return response.text, keywords_only, descriptions_only
 
@@ -113,8 +106,6 @@ if __name__ == "__main__":
     vertexai.init(project=project_id, location="us-central1")
     #response = generate_text("genaigenesis2024", "us-central1")
     #print(response)
-    
-    #transcript = "Right? Because, because I want people to isolate, you know, jackets and shoes separately."
     transcript = open("transcript.txt", "r")
     file = transcript.read()
     #print(transcript.read())
