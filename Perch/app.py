@@ -65,7 +65,7 @@ def run_python_script(file_path):
 def transcribe_audio(file_path):
 
     # Replace with your API key
-    aai.settings.api_key = "ce7e699b08654c93bd8db3f5fe302921"
+    aai.settings.api_key = "" #Add API key
 
     # URL of the file to transcribe
     FILE_URL = file_path
@@ -156,7 +156,7 @@ def accent():
     headers = {
     "Accept": "audio/mpeg",
     "Content-Type": "application/json",
-    "xi-api-key": "7245d2ffc12dd96537f08aaeb92495e8"
+    "xi-api-key": "" #Add API key
     }
 
     data = {
