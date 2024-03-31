@@ -47,10 +47,19 @@ def find_keywords(transcript):
     #keywords_only: only the keywords
     #descriptions_only: only the descriptions
     
+    #Delete generation_config if it happens to bug out with API version...
+    generation_config = genai.GenerationConfig(
+        temperature=0,          # higher = more creative (default 0.0)
+        top_p=0.7,                # higher = more random responses, response drawn from more possible next tokens (default 0.95)
+        top_k=40,                 # higher = more random responses, sample from more possible next tokens (default 40)
+        candidate_count=1,
+        max_output_tokens=1024,   # default = 2048
+    )   
     multimodal_model = genai.GenerativeModel("gemini-1.0-pro")
     response = multimodal_model.generate_content(
-        [transcript, "What are the top 5 important keywords of the text? What does the text say about them?"]
+        [transcript, "What are the top 5 important keywords of the text? What does the text say about them?"], generation_config=generation_config
     )
+    
 
     #Uncomment if keywords_only and descriptions_only throw and error (probably because gemini generated in a different format)
     #keywords = multimodal_model.generate_content([response.text, "List the keywords in this text"])
@@ -92,18 +101,34 @@ if __name__ == "__main__":
     transcript = open("transcript.txt", "r")
     file = transcript.read()
     #print(transcript.read())
-    notes_html = text_to_notes(file)
-    print(notes_html)
+    #notes_html = text_to_notes(file)
+    #print("\n")
+    #print("\n")
+    #print(notes_html)
     
     cleaned_text = clean_up_text(file)
+    print("\n")
+    print("\n")
     print(cleaned_text)
     
-    #translated_text = translate(transcribed_text, "French")
+    #translated_text = translate(cleaned_text, "French")
+    #print("\n")
+    #print("\n")
     #print(translated_text)
     
-    flashcards, keywords_only = find_keywords(cleaned_text)
-    print(keywords_only)
+    flashcards, keywords_only, descriptions_only = find_keywords(cleaned_text)
     
+    print("\n")
+    print("\n")
+    print(flashcards)
+    
+    print("\n")
+    print("\n")
+    print(keywords_only)
+
+    print("\n")
+    print("\n")
+    print(descriptions_only)
     
     
     
